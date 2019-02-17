@@ -1,9 +1,9 @@
 package com.sheffmachine.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Task {
     @Id
     @GeneratedValue
@@ -21,5 +22,4 @@ public class Task {
     @JsonFormat(pattern = "MM/dd/yyyy")
     private LocalDate dueDate;
     private Boolean completed;
-
 }
