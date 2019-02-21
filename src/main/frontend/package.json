@@ -13,6 +13,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "npm run deploy",
+    "predeploy": "rimraf ../resources/static && mkdir ../resources/static",
+    "deploy": "copyfiles -f build/** ../resources/static && copyfiles -f build/static/css/** ../resources/static/static/css/ && copyfiles -f build/static/js/** ../resources/static/static/js/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -24,5 +27,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "copyfiles": "^2.1.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.3"
+  }
 }
