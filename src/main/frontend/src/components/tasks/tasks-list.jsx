@@ -1,44 +1,30 @@
-import React, { useState } from 'react'
-
-const tasksList = [
-  {
-    id: 1,
-    completed: true,
-    due: '10/08/2017',
-    name: 'task1',
-  },
-  {
-    id: 2,
-    completed: false,
-    due: '07/08/2017',
-    name: 'task2',
-  },
-  {
-    id: 3,
-    completed: true,
-    due: '03/08/2017',
-    name: 'task3',
-  },
-]
+import React, { useState, useEffect } from 'react'
+import { getTasks, saveTasks } from '../../utils/taskService'
 
 export default props => {
-  const [tasks, updateTasks] = useState(tasksList)
+  useEffect(() => {
+    getTasks()
+      .then(tasks => props.updateTasks(tasks))
+      .catch(err => console.log(err))
+  }, [])
   return (
     <ul className="list-group">
-      {tasks.map((task, index) => (
+      {props.tasks.map((task, index) => (
         <li key={index} className="list-group-item">
           <div className="task-checkbox">
             <input
               type="checkbox"
               className={'list-group-item'}
-              onChange={e => onTaskChange(e, task, updateTasks, tasks)}
+              onClick={e =>
+                onTaskChange(e, task, props.updateTasks, props.tasks)
+              }
               checked={task.completed}
             />
             <span className={task.completed ? 'name completed' : 'name'}>
               {task.name}
             </span>
             <span className={`badge ${getDueDateLabel(task)} pull-right`}>
-              {task.due}
+              {task.dueDate}
             </span>
           </div>
         </li>
@@ -57,6 +43,6 @@ function onTaskChange(e, task, updateTasks, tasks) {
   task.completed = !task.completed
   newTasks[index] = task
   updateTasks(newTasks)
-  // fetch({ url: '', method: 'POST' })
+  saveTasks(task)
   console.log('task has changed')
 }
