@@ -18,7 +18,7 @@ public class TaskController {
         return this.taskService.list();
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = {"", "/"})
     public Task saveTask(@RequestBody Task task) {
         return this.taskService.save(task);
     }
